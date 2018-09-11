@@ -1,1 +1,5 @@
-from flask import FlaskΩ
+from flask import Flask
+
+
+app = Flask(__name__)
+
