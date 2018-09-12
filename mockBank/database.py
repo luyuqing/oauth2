@@ -2,8 +2,6 @@ import os
 import sqlite3
 from flask import g
 
-from app import app
-
 
 db_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(db_dir, 'database.db')
@@ -50,6 +48,7 @@ def add_user(id_, name, password, auth):
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute(sql, (id_, name, password, auth))
+        conn.commit()
     except Exception as e:
         print(e)
     finally:
@@ -75,10 +74,3 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect(db_path)
     return db
-
-
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
