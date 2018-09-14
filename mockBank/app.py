@@ -1,6 +1,7 @@
-from flask import Flask, g, render_template, session, request, jsonify, redirect, url_for
+from flask import Flask, render_template, session, request, jsonify, redirect, url_for
+import datetime
 
-from database import update_auth, get_db, check_password, check_balance
+from database import update_auth, get_db, check_password, check_balance, deduct_balance
 
 
 app = Flask(__name__)
@@ -54,6 +55,21 @@ def balance():
     else:
         message = 'You need log in first'
     return render_template('balance.html', message=message)
+
+
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer():
+    message = ''
+    if request.method == 'POST':
+        name = session.get('logged_in_user')
+        if name is None:
+            return jsonify('You must log in first')
+        else:
+            amount = int(request.json)
+            deduct_balance(name, amount)
+            balance = check_balance(name)
+            return jsonify({"balance": str(balance), "time": str(datetime.datetime.now())[:19]})
+    return render_template('transfer.html', message=message)
 
 
 @app.teardown_appcontext

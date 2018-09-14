@@ -1,0 +1,36 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p>Type in transfer amount:</p>
+        <form>
+            <input id="amount" type="number">
+            <input id="submit" type="submit">
+        </form>
+        <br>
+        <br>
+        <h3 id="output"></h3>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+               $("form").submit(function(e){
+                   e.preventDefault();
+                   const amount = $("#amount").val();
+                   $.ajax({
+                       url: '/transfer',
+                       type: 'POST',
+                       data: JSON.stringify(amount),
+                       contentType: 'application/json',
+                       success: function(res) {
+                           const balance = res.balance;
+                           const time = res.time;
+                           const output = `Your current balance is ${balance}, last transfer at ${time}`;
+                           $("#output").text(output);
+                       }
+                   });
+               });
+            });
+        </script>
+    </body>
+</html>
