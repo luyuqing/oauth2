@@ -128,6 +128,20 @@ def deduct_balance(name, amount):
         conn.close()
 
 
+# check password
+def check_password(name):
+    sql = """select password from users where name = ?"""
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute(sql, (name,))
+        return cursor.fetchone()[0]
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
+
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:

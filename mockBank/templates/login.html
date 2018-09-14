@@ -36,8 +36,13 @@
                         url: '/login',
                         data: {"username": username, "password": password},
                         type: 'POST',
-                        success: function(){
-                            location.replace('http://127.0.0.1:5005/balance');
+                        success: function(res){
+                            if (res === 'verified') {
+                                alert(res);
+                                location.replace('http://127.0.0.1:5005/');
+                            } else {
+                                alert('Invalid username or password');
+                            }
                         }
                     });
                 });

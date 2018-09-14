@@ -1,22 +1,50 @@
 <html>
     <head>
         <title>Mock Bank</title>
+        <style>
+            #logout {
+                display: none;
+            }
+        </style>
     </head>
     <body>
         <h1>Mock Bank Apis</h1>
         <h3>{{ welcome_message }}</h3>
-        <button>Balance</button>
+        <button id="balanceButton">Balance</button>
         <br>
         <br>
-        <button>Transfer</button>
+        <button id="transferButton">Transfer</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button id="logout">Log out</button>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
+                const name = $("h3").text();
+                if (name.length > 2) {
+                    $("#logout").show();
+                };
                 $("button").click(function(){
                     const name = $("h3").text();
-                    if (name.length < 2) {
+                    if ( name.length < 1 || !name ) {
                         alert('Please log in.');
                         location.replace("http://127.0.0.1:5005/login");
+                    } else {
+                        $("#balanceButton").click(function(){
+                            location.replace("http://127.0.0.1:5005/balance");
+                        });
+
+                        $("#logout").click(function(){
+                            $.ajax({
+                                url: '/logout',
+                                type: 'POST'
+                            });
+                            location.reload();
+                        });
                     }
                 });
             });
