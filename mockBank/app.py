@@ -23,9 +23,14 @@ def login():
         print(request.form)
         username = request.form.get('username')
         password = request.form.get('password')
-        return render_template('balance.html')
+        return jsonify('hahaha')
     else:
         return render_template('login.html')
+
+
+@app.route('/balance')
+def balance():
+    return render_template('balance.html')
 
 
 @app.teardown_appcontext

@@ -32,12 +32,14 @@
                     const username = $("#username").val();
                     const password = $("#password").val();
 
-                    
-                    // $.ajax({
-                    //     url: '/login',
-                    //     data: {'username': username, 'password': password},
-                    //     type: 'POST'
-                    // });
+                    $.ajax({
+                        url: '/login',
+                        data: {"username": username, "password": password},
+                        type: 'POST',
+                        success: function(){
+                            location.replace('http://127.0.0.1:5005/balance');
+                        }
+                    });
                 });
             });
         </script>
