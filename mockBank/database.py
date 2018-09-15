@@ -15,7 +15,8 @@ def create_table():
         name text NOT NULL,
         password text NOT NULL,
         authenticated integer NOT NULL,
-        balance integer NOT NULL
+        balance integer NOT NULL,
+        auth_code text,
     );
     """
 
@@ -135,6 +136,34 @@ def check_password(name):
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute(sql, (name,))
+        return cursor.fetchone()[0]
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
+
+
+# update auth_code
+def update_auth_code(name, code):
+    sql = """update users set auth_code = ? where name = ?"""
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute(sql, (code, name))
+        conn.commit()
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
+
+
+# check_auth_code
+def check_auth_code(code):
+    sql = """select name from users where auth_code = ?"""
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute(sql, (code,))
         return cursor.fetchone()[0]
     except Exception as e:
         print(e)

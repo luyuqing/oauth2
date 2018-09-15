@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Login Page</title>
+        <style>
+            .loginput {
+                margin: 10px;
+                border-radius: 5px;
+            }
+            .loginSubmit {
+                float: center;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <form id="loginForm">
+            <table>
+                <tr>
+                    <td>username<input type="text" id="username" class="loginput"/></td>
+                </tr>
+                <tr>
+                    <td>password<input type="password" id="password" class="loginput"/></td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="submit" value="Submit" class="loginSubmit"></td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            $(document).ready(function(){
+                $("#loginForm").submit(function(){
+                    const username = $("#username").val();
+                    const password = $("#password").val();
+
+                    $.ajax({
+                        url: '/oauth2_login',
+                        data: {"username": username, "password": password},
+                        type: 'POST',
+                        success: function(res){
+                            if (res.uri) {
+                                alert('verified');
+                                location.replace(res.uri);
+                            } else {
+                                alert('Invalid username or password');
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

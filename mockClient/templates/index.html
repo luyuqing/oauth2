@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Mock Client</title>
+    </head>
+    <body>
+        <h1>Welcome to Mock Client Website</h1>
+        <p>Do you want to use mockBank to log in?</p>
+        <button>yes</button>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("button").click(function(){
+                    location.replace('http://127.0.0.1:5005/oauth2_login');
+                });
+            });
+        </script>
+    </body>
+</html>

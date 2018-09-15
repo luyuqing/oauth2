@@ -1,0 +1,1 @@
+Practicing simple oauth2 with MockBank as Resource and Authorizer and MockClient as client. A lot messy code, I know, just for Playing around and getting a sense of the framework :)
